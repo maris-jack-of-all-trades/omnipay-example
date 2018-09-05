@@ -1,0 +1,25 @@
+use Omnipay\Omnipay;
+
+// PayPal Express:
+
+if(isset($_POST['paypalexpress'])) {
+
+$gateway = GatewayFactory::create('PayPal_Express');
+$gateway->setUsername('{myusername}');
+$gateway->setPassword('{mypassword}');
+$gateway->setSignature('{mysignauture}');
+$gateway->setTestMode(true);
+
+$response = $gateway->purchase(
+array(
+    'cancelUrl'=>'http://www.mysite.com/?cancelled',
+    'returnUrl'=>'http://www.mysite.com/?success',
+    'amount' =>  "12.99",
+    'currency' => 'GBP',
+    'Description' => 'Test Purchase for 12.99'
+    )
+
+ )->send();
+
+$response->redirect();
+}
